@@ -1,7 +1,8 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from datetime import datetime
 from enum import Enum
 from typing import Optional
+from typing_extensions import Annotated
 
 class ModelName(str, Enum):
     alexnet = "alexnet"
@@ -50,3 +51,7 @@ class ResponsePost(Post):
 
     class Config:
         orm_model = True
+
+class Vote(BaseModel):
+    post_id: int
+    dir: Annotated[int, Field(le=1)]
