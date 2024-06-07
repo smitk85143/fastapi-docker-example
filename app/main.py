@@ -1,6 +1,7 @@
 from typing import Union, Annotated
 from fastapi import FastAPI, UploadFile, File, Query, Path
 from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from PIL import Image
 import uuid
@@ -12,6 +13,14 @@ from routers import posts, users, auth
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(posts.router)
 app.include_router(users.router)
